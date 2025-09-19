@@ -2,7 +2,7 @@
 :root {
   --bg: #064906;      /* Background color */
   --accent: #2b9348;  /* Main green color */
-  --muted: #666;      /* Muted text color */
+  --muted: #000000;      /* Muted text color */
 }
 
 * {
@@ -135,7 +135,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #2f2b2b;
   transition: transform 2s;
 }
 
