@@ -1,6 +1,6 @@
 /* ==== Basic Theme ==== */
 :root {
-  --bg: #f7fff7;      /* Background color */
+  --bg: #064906;      /* Background color */
   --accent: #2b9348;  /* Main green color */
   --muted: #666;      /* Muted text color */
 }
@@ -148,7 +148,7 @@ body {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s;
-  background: #fff;
+  background: #064906;
   padding: 0 8px;
 }
 
