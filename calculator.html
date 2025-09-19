@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calorie & Nutrition Calculator</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<nav class="nav"><div class="brand">GreenBite</div><a href="index.html">Home</a></nav>
+<main>
+  <h1>Calorie & Nutrition Calculator</h1>
+  <form id="calcForm" class="card">
+    <label>Age <input type="number" id="age" min="10" value="25"></label>
+    <label>Gender
+      <select id="gender"><option>Male</option><option>Female</option></select>
+    </label>
+    <label>Height (cm) <input type="number" id="height" value="170"></label>
+    <label>Weight (kg) <input type="number" id="weight" value="70"></label>
+    <label>Activity
+      <select id="activity">
+        <option value="1.2">Sedentary</option>
+        <option value="1.375">Lightly active</option>
+        <option value="1.55">Moderately active</option>
+        <option value="1.725">Very active</option>
+        <option value="1.9">Super active</option>
+      </select>
+    </label>
+    <button type="button" id="calcBtn">Calculate</button>
+  </form>
+
+  <div id="result" class="card hidden">
+    <h2>Results</h2>
+    <p id="bmr">BMR: -</p>
+    <p id="tdee">TDEE: -</p>
+    <div>
+      <h3>Macros (grams)</h3>
+      <p>Carbs: <span id="carbs">-</span> g</p>
+      <p>Protein: <span id="protein">-</span> g</p>
+      <p>Fat: <span id="fat">-</span> g</p>
+    </div>
+    <div id="bars">
+      <div class="barRow">Carbs <div class="bar"><div id="barCarbs" class="innerBar"></div></div></div>
+      <div class="barRow">Protein <div class="bar"><div id="barProtein" class="innerBar"></div></div></div>
+      <div class="barRow">Fat <div class="bar"><div id="barFat" class="innerBar"></div></div></div>
+    </div>
+  </div>
+</main>
+<script>
+function calcBMR(gender, weight, height, age){
+  if(gender==='Male') return 10*weight + 6.25*height - 5*age + 5;
+  return 10*weight + 6.25*height - 5*age - 161;
+}
+document.getElementById('calcBtn').addEventListener('click', ()=>{
+  const age=Number(document.getElementById('age').value);
+  const gender=document.getElementById('gender').value;
+  const height=Number(document.getElementById('height').value);
+  const weight=Number(document.getElementById('weight').value);
+  const factor=Number(document.getElementById('activity').value);
+  if(age<=0||height<=0||weight<=0){ alert('Please enter valid numbers.'); return; }
+  const bmr = Math.round(calcBMR(gender,weight,height,age));
+  const tdee = Math.round(bmr * factor);
+  // macros
+  const carbs_g = Math.round((tdee*0.5)/4);
+  const protein_g = Math.round((tdee*0.2)/4);
+  const fat_g = Math.round((tdee*0.3)/9);
+  document.getElementById('bmr').textContent = 'BMR: '+bmr+' kcal';
+  document.getElementById('tdee').textContent = 'TDEE: '+tdee+' kcal';
+  document.getElementById('carbs').textContent = carbs_g;
+  document.getElementById('protein').textContent = protein_g;
+  document.getElementById('fat').textContent = fat_g;
+  document.getElementById('result').classList.remove('hidden');
+  // animate bars
+  const bc = Math.min(100, Math.round((carbs_g*4/tdee)*100));
+  const bp = Math.min(100, Math.round((protein_g*4/tdee)*100));
+  const bf = Math.min(100, Math.round((fat_g*9/tdee)*100));
+  document.getElementById('barCarbs').style.width = bc + '%';
+  document.getElementById('barProtein').style.width = bp + '%';
+  document.getElementById('barFat').style.width = bf + '%';
+});
+</script>
+</body></html>

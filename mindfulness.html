@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mindfulness</title>
+<link rel="stylesheet" href="styles.css">
+</head><body>
+<nav class="nav"><div class="brand">GreenBite</div><a href="index.html">Home</a></nav>
+<main>
+  <h1>Mindfulness</h1>
+  <div class="card">
+    <div id="breath" class="breath">Breathing Circle</div>
+    <div>
+      <button id="startBreath">Start Breath</button>
+      <button id="stopBreath">Stop</button>
+    </div>
+    <hr/>
+    <h3>Timer</h3>
+    <label>Minutes <input id="minInput" type="number" value="1" min="1"></label>
+    <button id="startTimer">Start Session</button>
+    <p id="sessionMsg"></p>
+    <div>
+      <button id="soundToggle">Toggle Ambient</button>
+    </div>
+  </div>
+</main>
+<script>
+let breathInterval=null;
+function animateBreath(start){
+  const el=document.getElementById('breath');
+  if(start){
+    el.classList.add('inhale');
+    breathInterval = setInterval(()=> el.classList.toggle('inhale'), 4000);
+  }else{
+    clearInterval(breathInterval); breathInterval=null;
+    el.classList.remove('inhale');
+  }
+}
+document.getElementById('startBreath').addEventListener('click', ()=> animateBreath(true));
+document.getElementById('stopBreath').addEventListener('click', ()=> animateBreath(false));
+
+// Simple session timer + tracking
+document.getElementById('startTimer').addEventListener('click', ()=>{
+  const mins = Number(document.getElementById('minInput').value) || 1;
+  let secs = mins*60;
+  document.getElementById('sessionMsg').textContent = 'Session running: '+mins+' min';
+  const id = setInterval(()=>{
+    secs--;
+    if(secs<=0){ clearInterval(id); document.getElementById('sessionMsg').textContent='Session complete!'; trackSession(); }
+  },1000);
+});
+
+// ambient sound using oscillator as simple tone
+let ambientOn = false, ambientCtx=null, ambientOsc=null;
+document.getElementById('soundToggle').addEventListener('click', ()=>{
+  if(!ambientOn){
+    ambientOn=true;
+    try{
+      ambientCtx = new (window.AudioContext||window.webkitAudioContext)();
+      ambientOsc = ambientCtx.createOscillator(); ambientOsc.frequency.value=220; ambientOsc.type='sine';
+      const gain = ambientCtx.createGain(); gain.gain.value=0.02;
+      ambientOsc.connect(gain); gain.connect(ambientCtx.destination);
+      ambientOsc.start();
+    }catch(e){}
+    document.getElementById('soundToggle').textContent='Stop Ambient';
+  }else{
+    ambientOn=false;
+    if(ambientOsc) ambientOsc.stop();
+    if(ambientCtx) ambientCtx.close();
+    document.getElementById('soundToggle').textContent='Toggle Ambient';
+  }
+});
+
+function trackSession(){
+  const k='green_sessions';
+  const arr = JSON.parse(localStorage.getItem(k) || '[]');
+  arr.push({when:new Date().toISOString()});
+  localStorage.setItem(k, JSON.stringify(arr));
+}
+</script>
+</body></html>
