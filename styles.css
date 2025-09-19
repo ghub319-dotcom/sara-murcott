@@ -1,11 +1,10 @@
 /* ==== Basic Theme ==== */
 :root {
-  --bg: #e9f5ec;           /* very light mint background */
-  --accent-dark: #1b5e20;  /* deep forest green */
-  --accent: #2e7d32;       /* main green */
-  --accent-light: #81c784; /* soft green */
-  --cream: #fdf6e3;        /* warm cream for variety */
-  --muted: #333;           /* readable dark gray text */
+  --bg: #eafaf1;        /* soft mint background */
+  --accent: #2e7d32;    /* rich green for highlights */
+  --accent-light: #66bb6a; /* lighter green */
+  --muted: #444;        /* neutral dark gray */
+  --white: #ffffff;
 }
 
 * {
@@ -25,9 +24,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, var(--accent-dark), var(--accent));
-  color: #fdfdfd;
-  padding: 12px 18px;
+  background: var(--accent);
+  color: var(--white);
+  padding: 10px 16px;
   position: sticky;
   top: 0;
 }
@@ -39,14 +38,14 @@ body {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 14px;
+  gap: 12px;
   margin: 0;
   padding: 0;
 }
 
 .nav-links a {
   text-decoration: none;
-  color: #fdfdfd;
+  color: var(--white);
   font-weight: bold;
   transition: color 0.3s;
 }
@@ -57,31 +56,31 @@ body {
 
 .hamburger {
   display: none; /* hidden on desktop */
-  color: #fdfdfd;
+  color: var(--white);
 }
 
 /* ==== Hero Section ==== */
 .hero {
-  padding: 50px 20px;
+  padding: 40px 16px;
   text-align: center;
-  background: linear-gradient(135deg, #c8e6c9, var(--cream));
-  color: var(--accent-dark);
+  background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+  color: #1b5e20;
   border-bottom: 3px solid var(--accent);
 }
 
 /* ==== Cards + Grid ==== */
 .card {
-  background: var(--cream); /* warm cream */
-  padding: 14px;
+  background: var(--white);
+  padding: 12px;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin: 12px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .grid {
@@ -109,12 +108,12 @@ body {
 }
 
 .modal-content {
-  background: #f1f8e9; /* pale green */
-  padding: 20px;
+  background: var(--white);
+  padding: 16px;
   width: 90%;
   max-width: 700px;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 /* ==== Nutrition Table ==== */
@@ -125,20 +124,19 @@ body {
 
 .nutri th {
   background: var(--accent);
-  color: #fff;
+  color: var(--white);
   padding: 8px;
 }
 
 .nutri td {
-  border: 1px solid var(--accent-light);
+  border: 1px solid #ccc;
   padding: 6px;
-  background: #fdfaf4; /* soft off-white */
   text-align: left;
 }
 
 /* ==== Progress Bars ==== */
 .bar {
-  background: #d7e5d9;
+  background: #ddd;
   height: 16px;
   border-radius: 8px;
   overflow: hidden;
@@ -164,11 +162,11 @@ body {
   height: 120px;
   border-radius: 50%;
   margin: 12px auto;
-  background: radial-gradient(circle, var(--accent-light), var(--accent));
+  background: linear-gradient(135deg, var(--accent), #81c784);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--white);
   transition: transform 2s;
 }
 
@@ -181,9 +179,9 @@ body {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s;
-  background: #e0f2f1;
+  background: #f1f8e9;
   padding: 0 8px;
-  border-left: 4px solid var(--accent-dark);
+  border-left: 4px solid var(--accent);
 }
 
 .accordion .panel.open {
@@ -196,13 +194,13 @@ body {
   .nav-links {
     display: none;
     flex-direction: column;
-    background: #c8e6c9;
+    background: var(--white);
     position: absolute;
     top: 50px;
     right: 12px;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 8px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
 
   .nav-links.open {
