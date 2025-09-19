@@ -1,77 +1,53 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GreenBite — Mindfulness</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="nav-wrap"><div class="logo">GreenBite</div><nav id="nav"><a href="index.html">Home</a><a href="recipes.html">Recipes</a><a href="calculator.html">Calculator</a><a href="workouts.html">Workouts</a><a href="mindfulness.html" class="active">Mindfulness</a><a href="contact.html">Contact</a></nav></header>
-<main class="container">
-  <h1>Mindfulness</h1>
-  <section class="breathing">
-    <div id="breath-circle" class="circle">Breathe</div>
-    <div class="controls">
-      <button id="start-breath">Start</button>
-      <button id="stop-breath">Stop</button>
-    </div>
-  </section>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GreenBite — Mindfulness</title>
+<style>
+  body{font-family:Arial,sans-serif;text-align:center;background:#f5fff7;}
+  .rectangle{width:200px;height:120px;margin:20px auto;background:#a8e6cf;
+    border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:bold;transition:transform 2s;}
+  button{margin:5px;padding:8px 14px;border:none;border-radius:6px;
+    background:#2e8b57;color:#fff;cursor:pointer;}
+  footer{margin-top:20px;color:#555;}
+</style>
+</head>
+<body>
+<h1>Mindfulness</h1>
 
-  <section class="pomodoro">
-    <h3>Timer</h3>
-    <input id="minutes" type="number" min="1" value="5"> minutes
-    <button id="start-timer">Start</button>
-    <div id="pom-display"></div>
-  </section>
+<section>
+  <div id="rect" class="rectangle">Breathe</div>
+  <button onclick="startBreath()">Start</button>
+  <button onclick="stopBreath()">Stop</button>
+</section>
 
-  <section class="ambient">
-    <h3>Ambient Sounds</h3>
-    <button data-sound="rain" class="sound-btn">Toggle Rain</button>
-    <button data-sound="waves" class="sound-btn">Toggle Waves</button>
-  </section>
-</main>
+<section>
+  <h3>Calm Music</h3>
+  <button onclick="toggleMusic('nature')">Toggle Nature</button>
+  <button onclick="toggleMusic('piano')">Toggle Piano</button>
+  <audio id="nature" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+  <audio id="piano" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
+</section>
+
 <footer>© GreenBite</footer>
-<script src="common.js"></script>
+
 <script>
-// breathing animation: expand/contract the circle
-let breathInterval;
-function startBreathing(){
-  const el = document.getElementById('breath-circle');
-  let phase=0;
-  breathInterval = setInterval(()=>{
-    phase = (phase+1)%4;
-    if(phase===0){ el.style.transform='scale(1)'; el.textContent='Inhale'; }
-    if(phase===1){ el.style.transform='scale(1.4)'; el.textContent='Hold'; }
-    if(phase===2){ el.style.transform='scale(1)'; el.textContent='Exhale'; }
-    if(phase===3){ el.style.transform='scale(0.8)'; el.textContent='Hold'; }
-  }, 2000);
+let iv;
+function startBreath(){
+  const el=document.getElementById('rect');let p=0;
+  iv=setInterval(()=>{
+    p=(p+1)%4;
+    el.textContent=['Inhale','Hold','Exhale','Hold'][p];
+    el.style.transform=['scale(1)','scale(1.3)','scale(1)','scale(0.8)'][p];
+  },3000);
 }
-document.getElementById('start-breath').addEventListener('click', startBreathing);
-document.getElementById('stop-breath').addEventListener('click', ()=>{ clearInterval(breathInterval); document.getElementById('breath-circle').textContent='Breathe'; document.getElementById('breath-circle').style.transform='scale(1)'; });
-
-// Pomodoro-like timer and storage of sessions
-document.getElementById('start-timer').addEventListener('click', ()=>{
-  const mins = Math.max(1, +document.getElementById('minutes').value);
-  let s = mins*60;
-  document.getElementById('pom-display').textContent = `${mins}:00`;
-  const iv = setInterval(()=>{
-    s--; if(s<=0){ clearInterval(iv); document.getElementById('pom-display').textContent='Done'; // record session
-      const sessions = JSON.parse(localStorage.getItem('gb_sessions')||'[]'); sessions.push({date:new Date().toISOString(), mins}); localStorage.setItem('gb_sessions', JSON.stringify(sessions));
-    } else { document.getElementById('pom-display').textContent = Math.floor(s/60)+ ':' + String(s%60).padStart(2,'0'); }
-  },1000);
-});
-
-// Ambient toggles (simple using Audio if available)
-const sounds = { rain: null, waves: null };
-document.querySelectorAll('.sound-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const s = btn.dataset.sound;
-    // create simple oscillator as placeholder (no external files)
-    if(!sounds[s]){
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if(!AudioCtx){ alert('Audio not supported'); return; }
-      const ctx = new AudioCtx();
-      const o = ctx.createOscillator();
-      o.type='sine'; o.frequency.value = s==='rain'? 200 : 100;
-      const g = ctx.createGain(); g.gain.value = 0.01; o.connect(g); g.connect(ctx.destination); o.start();
-      sounds[s] = {ctx,o,g};
-      btn.textContent = 'Stop ' + s;
-    } else {
-      sounds[s].o.stop(); sounds[s].ctx.close(); sounds[s]=null; btn.textContent = 'Toggle ' + s;
-    }
-  });
-});
-</script></body></html>
+function stopBreath(){clearInterval(iv);const el=document.getElementById('rect');el.textContent='Breathe';el.style.transform='scale(1)';}
+function toggleMusic(id){
+  const a=document.getElementById(id);
+  a.paused?a.play():a.pause();
+}
+</script>
+</body>
+</html>
