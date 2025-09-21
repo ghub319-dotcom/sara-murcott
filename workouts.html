@@ -1,12 +1,75 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GreenBite — Workouts</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="nav-wrap"><div class="logo">GreenBite</div><nav id="nav"><a href="index.html">Home</a><a href="recipes.html">Recipes</a><a href="calculator.html">Calculator</a><a href="workouts.html" class="active">Workouts</a><a href="mindfulness.html">Mindfulness</a><a href="contact.html">Contact</a></nav></header>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GreenBite — Workouts</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Responsive video container */
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 ratio */
+    height: 0;
+    overflow: hidden;
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .video-container iframe {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+  }
+</style>
+</head>
+<body>
+<header class="nav-wrap">
+  <div class="logo">GreenBite</div>
+  <nav id="nav">
+    <a href="index.html">Home</a>
+    <a href="recipes.html">Recipes</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="workouts.html" class="active">Workouts</a>
+    <a href="mindfulness.html">Mindfulness</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
 <main class="container">
   <h1>Workout Generator</h1>
   <form id="workout-form">
-    <label>Body part <select id="bodypart"><option value="full">Full Body</option><option value="arms">Arms</option><option value="legs">Legs</option><option value="core">Core</option></select></label>
-    <label>Equipment <select id="equip"><option value="none">None</option><option value="dumbbells">Dumbbells</option><option value="band">Resistance Band</option></select></label>
+    <label>Body part 
+      <select id="bodypart">
+        <option value="full">Full Body</option>
+        <option value="arms">Arms</option>
+        <option value="legs">Legs</option>
+        <option value="core">Core</option>
+      </select>
+    </label>
+    <label>Equipment 
+      <select id="equip">
+        <option value="none">None</option>
+        <option value="dumbbells">Dumbbells</option>
+        <option value="band">Resistance Band</option>
+      </select>
+    </label>
     <button type="button" id="gen-btn">Generate</button>
   </form>
+
+  <!-- Workout Video Section -->
+  <h2>Workout Video Guide</h2>
+  <div class="video-container">
+    <iframe 
+      src="https://www.youtube.com/embed/U9ENCvFf9yQ"
+      title="Workout Video"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
 
   <div id="plan" class="plan hidden">
     <h2>Your Plan</h2>
@@ -19,16 +82,16 @@
     </div>
   </div>
 </main>
+
 <footer>© GreenBite</footer>
+
 <script src="data.js"></script>
 <script src="common.js"></script>
 <script>
 function genWorkout(){
   const bp = document.getElementById('bodypart').value;
   const eq = document.getElementById('equip').value;
-  // filter workouts
   const pool = workouts.filter(w=> (w.body===bp||bp==='full'&&w.body==='full') && (w.equipment==='any' || w.equipment===eq));
-  // choose 5 random
   const chosen = [];
   for(let i=0;i<5 && pool.length;i++){
     const idx = Math.floor(Math.random()*pool.length);
@@ -43,13 +106,12 @@ function genWorkout(){
     ol.appendChild(li);
   });
   document.getElementById('plan').classList.remove('hidden');
-  // store plan
   saveToLocal('last_workout', {date:new Date().toISOString(), plan: chosen});
 }
 
 document.getElementById('gen-btn').addEventListener('click', genWorkout);
 
-// Timer functionality (simple)
+// Timer functionality
 let timerInterval, currentIndex=0, currentList=[];
 document.getElementById('plan').addEventListener('click', (e)=>{
   if(e.target.id==='start-ex') startExercise();
@@ -74,7 +136,6 @@ function nextExercise(){
   document.getElementById('current-ex').textContent = name;
   let t = dur;
   document.getElementById('countdown').textContent = String(t).padStart(2,'0') + ':00'.slice(3);
-  // simple seconds countdown
   window.clearInterval(timerInterval);
   const display = document.getElementById('countdown');
   timerInterval = setInterval(()=>{
@@ -86,4 +147,15 @@ function nextExercise(){
 
 document.getElementById('workout-form').addEventListener('submit', (e)=>e.preventDefault());
 </script>
-</body></html>
+</body>
+</html>
+
+
+<!-- Map Section -->
+    <h3 style="margin-top:1.5rem">Our Location</h3>
+    <div id="map" style="width:100%;height:300px;margin-top:.5rem">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019500688301!2d-122.41941548468164!3d37.77492977975978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858064c6a2d5b9%3A0x5f1f4e7f1c0e6f0a!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1695150000000!5m2!1sen!2sus"
+        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
+      </iframe>
+    </div>
