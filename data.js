@@ -4,7 +4,7 @@ const recipes = [
   {
     title: "Quinoa Salad",
     category: "Salad",
-    img: "https://via.placeholder.com/600x400?text=Quinoa+Salad",
+    img: "https://slimmingviolet.com/wp-content/uploads/2024/11/avocado-quinoa-salad.png",
     desc: "Fresh quinoa salad with veggies.",
     ingredients: ["1 cup cooked quinoa","Tomato","Cucumber","Olive oil","Lemon"],
     steps: ["Cook quinoa","Chop vegetables","Mix with oil and lemon","Serve chilled"],
@@ -13,7 +13,7 @@ const recipes = [
   {
     title: "Oats Porridge",
     category: "Breakfast",
-    img: "https://via.placeholder.com/600x400?text=Oats+Porridge",
+    img: "https://www.throughthefibrofog.com/oat-milk-porridge/",
     desc: "Warm oats with milk and fruit.",
     ingredients: ["1/2 cup oats","Milk or water","Banana","Honey"],
     steps: ["Boil milk","Add oats and simmer","Top with banana and honey"],
@@ -22,7 +22,7 @@ const recipes = [
   {
     title: "Grilled Veg Wrap",
     category: "Lunch",
-    img: "https://via.placeholder.com/600x400?text=Veg+Wrap",
+    img: "https://www.foodnetwork.com/recipes/ellie-krieger/hummus-and-grilled-vegetable-wrap-recipe-1910036",
     desc: "Quick grilled vegetable wrap.",
     ingredients: ["Tortilla","Grilled veggies","Hummus"],
     steps: ["Grill veggies","Spread hummus","Assemble and roll"],

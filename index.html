@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>🌿 GreenBite — Home</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="main.css">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2a9d8f">
   <link rel="icon" href="favicon.png">
@@ -24,12 +24,34 @@
   </header>
 
   <main class="container">
-    <section class="hero">
-      <h1>🌿 Welcome to GreenBite 🌿</h1>
-      <p id="rotating-quote">🥗 Eat Clean. Live well.</p>
-      <div class="subscribe">
-        <input id="newsletter-email" type="email" placeholder="📧 Your email">
-        <button id="subscribe-btn">✅ Subscribe ✅</button>
+  <section class="hero expanded-hero" style="background: url('assets/breath.jpg') center/cover no-repeat; min-height: 350px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;">
+      <div class="hero-overlay" style="position: absolute; inset: 0; background: rgba(42,157,143,0.6);"></div>
+      <div class="hero-content" style="position: relative; z-index: 1; text-align: center;">
+        <h1 class="hero-title">🌿 Welcome to GreenBite 🌿</h1>
+        <p id="rotating-quote" class="hero-quote">🥗 Eat Clean. Live well.</p>
+        <p class="hero-desc">GreenBite inspires healthy living through balanced meals, energizing workouts, and mindful habits. Join us on a journey to nourish your body and mind, every day.</p>
+        <div class="subscribe">
+          <input id="newsletter-email" type="email" placeholder="📧 Your email" class="subscribe-input">
+          <button id="subscribe-btn" class="subscribe-btn">✅ Subscribe ✅</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-greenbite">
+      <div class="about-card">
+        <img src="assets/balance.jpg" alt="Healthy Meal" class="about-img">
+        <h3 class="about-title meals">Balanced Meals</h3>
+        <p>Discover delicious recipes that fuel your body and delight your taste buds. Every meal is a step toward a healthier you.</p>
+      </div>
+      <div class="about-card">
+        <img src="assets/Energizing Workouts.jpg" alt="Exercise" class="about-img">
+        <h3 class="about-title workouts">Energizing Workouts</h3>
+        <p>Stay active with fun, effective workouts for every fitness level. Move your body, boost your energy, and feel great.</p>
+      </div>
+      <div class="about-card">
+        <img src="assets/Mindful Living.jpg" alt="Mindfulness" class="about-img">
+        <h3 class="about-title mindful">Mindful Living</h3>
+        <p>Practice mindfulness and self-care with guided breathing, meditation, and daily tips for a balanced mind and body.</p>
       </div>
     </section>
 
